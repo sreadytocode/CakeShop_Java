@@ -1,5 +1,6 @@
 package com.example.cakeShop;
 
+import com.example.cakeShop.models.CakeShop;
 import org.junit.Before;
 import org.junit.Test;
 
