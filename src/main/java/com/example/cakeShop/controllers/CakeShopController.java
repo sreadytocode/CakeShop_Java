@@ -5,9 +5,7 @@ import com.example.cakeShop.repositories.CakeShopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,5 +24,23 @@ public class CakeShopController {
         return new ResponseEntity<>(cakeShopRepository.findById(id), HttpStatus.OK);
     }
 
+    @PostMapping(value = "/cakeShops")
+    public ResponseEntity<CakeShop> postCakeShops(@RequestBody CakeShop cakeShop){
+        cakeShopRepository.save(cakeShop);
+        return new ResponseEntity<>(cakeShop, HttpStatus.CREATED);
+    }
 
+    @PutMapping(value = "/cakeShops/{id}")
+    public ResponseEntity<CakeShop> putCakeShop(@RequestBody CakeShop cakeShop, @PathVariable Long id){
+        CakeShop cakeShopUpdate = cakeShopRepository.findById(id).get();
+        cakeShopUpdate.setName(cakeShop.getName());
+        cakeShopUpdate.setCakes(cakeShop.getCakes());
+        return new ResponseEntity<>(cakeShopUpdate, HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/cakeShops/{id}")
+    public ResponseEntity<Long> deleteCakeShop(@PathVariable Long id){
+        cakeShopRepository.deleteById(id);
+        return new ResponseEntity<>(id, HttpStatus.OK);
+    }
 }
