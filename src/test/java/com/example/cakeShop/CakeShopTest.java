@@ -15,7 +15,7 @@ public class CakeShopTest {
     }
 
     @Test
-    public void CakeShopHasName(){
+    public void doesCakeShopHaveAName(){
         assertEquals("Patisserie Cakes", cakeShop.getName());
     }
 }
