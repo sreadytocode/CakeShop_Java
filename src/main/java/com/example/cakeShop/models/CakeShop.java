@@ -1,6 +1,10 @@
 package com.example.cakeShop.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "cakeshops")
@@ -12,8 +16,13 @@ public class CakeShop {
     @Column
     private String name;
 
+    @JsonIgnoreProperties({"cakeShop"})
+    @OneToMany(mappedBy = "cakeShop", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<Cake> cakes;
+
     public CakeShop(String name) {
         this.name = name;
+        this.cakes = new ArrayList<>();
     }
 
     public CakeShop() {}
@@ -32,5 +41,17 @@ public class CakeShop {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Cake> getCakes() {
+        return cakes;
+    }
+
+    public void setCakes(List<Cake> cakes) {
+        this.cakes = cakes;
+    }
+
+    public int getCakesCount(){
+        return cakes.size();
     }
 }

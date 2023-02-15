@@ -1,5 +1,6 @@
 package com.example.cakeShop.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 @Entity
@@ -15,9 +16,15 @@ public class Cake {
     @Column
     private Double price;
 
-    public Cake(String name, Double price) {
+    @JsonIgnoreProperties({"cakes"})
+    @ManyToOne
+    @JoinColumn(name = "cakeShop_id", nullable = false)
+    private CakeShop cakeShop;
+
+    public Cake(String name, Double price, CakeShop cakeShop) {
         this.name = name;
         this.price = price;
+        this.cakeShop = cakeShop;
     }
 
     public Cake(){}
@@ -44,5 +51,13 @@ public class Cake {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public CakeShop getCakeShop() {
+        return cakeShop;
+    }
+
+    public void setCakeShop(CakeShop cakeShop) {
+        this.cakeShop = cakeShop;
     }
 }
