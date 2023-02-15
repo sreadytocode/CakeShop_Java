@@ -6,10 +6,11 @@ import com.example.cakeShop.repositories.CakeRepository;
 import com.example.cakeShop.repositories.CakeShopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DataLoader {
+public class DataLoader implements ApplicationRunner {
 
     @Autowired
     CakeRepository cakeRepository;
