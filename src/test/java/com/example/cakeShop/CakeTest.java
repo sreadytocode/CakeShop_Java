@@ -21,7 +21,7 @@ public class CakeTest {
 
     @Test
     public void doesCakeHaveAPrice(){
-        assertEquals(6.00, cake.getPrice());
+        assertEquals(6.00, cake.getPrice(), 0.0);
     }
 
 }

@@ -12,8 +12,12 @@ public class Cake {
     @Column
     private String name;
 
-    public Cake(String name) {
+    @Column
+    private Double price;
+
+    public Cake(String name, Double price) {
         this.name = name;
+        this.price = price;
     }
 
     public Cake(){}
@@ -32,5 +36,13 @@ public class Cake {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 }
