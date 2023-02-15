@@ -11,12 +11,17 @@ public class CakeTest {
 
     @Before
     public void before(){
-        cake = new Cake("Red Velvet Cake");
+        cake = new Cake("Red Velvet Cake", 6.00);
     }
 
     @Test
     public void doesCakeHaveAName(){
         assertEquals("Red Velvet Cake", cake.getName());
+    }
+
+    @Test
+    public void doesCakeHaveAPrice(){
+        assertEquals(6.00, cake.getPrice());
     }
 
 }
