@@ -38,7 +38,6 @@ import static org.springframework.web.servlet.function.RequestPredicates.content
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@AutoConfigureMockMvc
 public class CakeShopApplicationIT {
 
     @Autowired
@@ -63,6 +62,33 @@ public class CakeShopApplicationIT {
         List<CakeShop> cakeShops = response.getBody();
         assertNotNull(cakeShops);
         assertTrue(cakeShops.size() > 0);
+
+    }
+
+    @Test
+    public void getCakeShop(){
+        CakeShop patisserieCakes = new CakeShop("Patisserie Cakes");
+        cakeShopRepository.save(patisserieCakes);
+        ResponseEntity<CakeShop> response = restTemplate.getForEntity("/cakeShops/{id}", CakeShop.class, patisserieCakes.getId());
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody().getId()).isEqualTo(patisserieCakes.getId());
+        assertThat(response.getBody().getName()).isEqualTo(patisserieCakes.getName());
+        assertThat(response.getBody().getCakes()).isEqualTo(patisserieCakes.getCakes());
+    }
+
+    @Test
+    public void addNewCakeShop() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        CakeShop newCakeShop = new CakeShop("New CakeShop");
+
+        HttpEntity<CakeShop> request = new HttpEntity<>(newCakeShop, headers);
+        ResponseEntity<CakeShop> response = restTemplate.postForEntity("/cakeShops", request, CakeShop.class);
+
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertNotNull(response.getBody().getId());
 
     }
 
@@ -114,32 +140,7 @@ public class CakeShopApplicationIT {
 //        assertThat(response.getBody()).isEqualTo(cakeShop);
 //    }
 
-    @Test
-    public void getCakeShop(){
-        CakeShop patisserieCakes = new CakeShop("Patisserie Cakes");
-        cakeShopRepository.save(patisserieCakes);
-        ResponseEntity<CakeShop> response = restTemplate.getForEntity("/cakeShops/{id}", CakeShop.class, patisserieCakes.getId());
 
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(response.getBody().getId()).isEqualTo(patisserieCakes.getId());
-        assertThat(response.getBody().getName()).isEqualTo(patisserieCakes.getName());
-        assertThat(response.getBody().getCakes()).isEqualTo(patisserieCakes.getCakes());
-    }
-
-    @Test
-    public void addNewCakeShop() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        CakeShop newCakeShop = new CakeShop("New CakeShop");
-
-        HttpEntity<CakeShop> request = new HttpEntity<>(newCakeShop, headers);
-        ResponseEntity<CakeShop> response = restTemplate.postForEntity("/cakeShops", request, CakeShop.class);
-
-        assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertNotNull(response.getBody().getId());
-
-    }
 
 
 }
