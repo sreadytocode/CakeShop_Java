@@ -1,5 +1,5 @@
 # Official openjdk runtime as parent image
-FROM docker.io/library/docker
+FROM debian:latest
 
 RUN apt-get update && \
     apt-get install -y openjdk-11-jdk
