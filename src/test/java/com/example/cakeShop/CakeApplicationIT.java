@@ -10,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
@@ -64,7 +62,23 @@ public class CakeApplicationIT {
 //        Assert to get cakeshop attached to cake as otherwise getting an error message
         assertThat(response.getBody().getCakeShop().getId()).isEqualTo(patisserieCakes.getId());
         assertThat(response.getBody().getCakeShop().getName()).isEqualTo(patisserieCakes.getName());
-
-
     }
+
+//    @Test
+//    public void addNewCake(){
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setContentType(MediaType.APPLICATION_JSON);
+//
+//        CakeShop patisserieCakes = new CakeShop("Patisserie Cakes");
+//        cakeShopRepository.save(patisserieCakes);
+//
+//        Cake blueberryCake = new Cake("Blueberry cake", 6.00, patisserieCakes);
+//
+//        HttpEntity<Cake> request = new HttpEntity<>(blueberryCake, headers);
+//        ResponseEntity<Cake> response = restTemplate.postForEntity("/cakes", request, Cake.class);
+//
+//        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+//        assertNotNull(response.getBody().getId());
+//
+//    }
 }
