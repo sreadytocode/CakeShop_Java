@@ -11,5 +11,5 @@ COPY . /app/
 RUN ./mvnw package
 
 # Set startup command to run application
-CMD ["java", "-jar", "target/cakeShop.jar"]
+CMD ["java", "-jar", "target/cake-shop.jar"]
 
