@@ -38,5 +38,13 @@ public class DataLoader implements ApplicationRunner {
 
         Cake tiramisu = new Cake("Tiramisu", 5.00, patisserieCakes);
         cakeRepository.save(tiramisu);
+
+        CakeShop maya = new CakeShop("Maya desserts");
+        cakeShopRepository.save(maya);
+
+        Cake tiramisuCake = new Cake("Tiramisu Cake", 32.95, maya);
+        cakeRepository.save(tiramisuCake);
+
+
     }
 }

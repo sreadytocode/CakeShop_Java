@@ -46,44 +46,59 @@ public class CakeShopApplicationIT {
     @Autowired
     CakeRepository cakeRepository;
 
+
     @Test
     public void getAllCakeShops() throws JsonProcessingException {
 
-//        Arrange
+//      Arrange
         CakeShop patisserieCakes = new CakeShop("Patisserie Cakes");
 
         Cake redVelvetCake = new Cake("Red Velvet Cake", 6.00, patisserieCakes);
         redVelvetCake.setId(1L);
+
         Cake oreoCheeseCake = new Cake("Oreo Cheesecake", 6.00, patisserieCakes);
         oreoCheeseCake.setId(2L);
+
         Cake victoriaSponge = new Cake("Victoria Sponge Cake", 6.00, patisserieCakes);
         victoriaSponge.setId(3L);
+
         Cake blackForestCake = new Cake("Black Forest Cake", 5.90, patisserieCakes);
         blackForestCake.setId(4L);
+
         Cake tiramisu = new Cake("Tiramisu", 5.00, patisserieCakes);
         tiramisu.setId(5L);
+
         List <Cake> cakeList = Arrays.asList(redVelvetCake, oreoCheeseCake, victoriaSponge, blackForestCake, tiramisu);
+
         patisserieCakes.setCakes(cakeList);
         patisserieCakes.setId(1L);
-        List<CakeShop> cakeShopList = Arrays.asList(patisserieCakes);
 
-//      Convert JSON into JSON string
+        CakeShop maya = new CakeShop("Maya desserts");
+        maya.setId(2L);
+
+        Cake tiramisuCake = new Cake("Tiramisu Cake", 32.95, maya);
+        tiramisuCake.setId(6L);
+        List <Cake> mayaCakeList = Arrays.asList(tiramisuCake);
+        maya.setCakes(mayaCakeList);
+
+        List<CakeShop> cakeShopList = Arrays.asList(patisserieCakes, maya);
+//        cakeShopRepository.saveAll(cakeShopList);
+//      Convert JSON into JSON string in this instance as easier to test full object as an arraylist
         ObjectMapper objectMapper = new ObjectMapper();
-        String cakes = objectMapper.writeValueAsString(cakeShopList);
+        String cakeShop = objectMapper.writeValueAsString(cakeShopList);
 
 //      Act
         ResponseEntity<String> response = restTemplate.getForEntity("/cakeShops", String.class);
 
 //      Assert
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(response.getBody()).isEqualTo(cakes);
+        assertThat(response.getBody()).isEqualTo(cakeShop);
     }
 
     @Test
     public void getCakeShop(){
         CakeShop patisserieCakes = new CakeShop("Patisserie Cakes");
         cakeShopRepository.save(patisserieCakes);
-
         ResponseEntity<CakeShop> response = restTemplate.getForEntity("/cakeShops/{id}", CakeShop.class, patisserieCakes.getId());
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
