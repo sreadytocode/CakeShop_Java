@@ -72,7 +72,7 @@ public class CakeShopApplicationIT {
         String cakes = objectMapper.writeValueAsString(cakeShopList);
 
 //      Act
-        ResponseEntity<String> response = restTemplate.getForEntity("/cakeShops", String.class, patisserieCakes.getId());
+        ResponseEntity<String> response = restTemplate.getForEntity("/cakeShops", String.class);
 
 //      Assert
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
