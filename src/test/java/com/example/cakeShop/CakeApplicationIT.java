@@ -61,6 +61,7 @@ public class CakeApplicationIT {
         assertThat(response.getBody().getName()).isEqualTo(redVelvetCake.getName());
         assertThat(response.getBody().getPrice()).isEqualTo(redVelvetCake.getPrice());
 
+//        Assert to get cakeshop attached to cake as otherwise getting an error message
         assertThat(response.getBody().getCakeShop().getId()).isEqualTo(patisserieCakes.getId());
         assertThat(response.getBody().getCakeShop().getName()).isEqualTo(patisserieCakes.getName());
 
