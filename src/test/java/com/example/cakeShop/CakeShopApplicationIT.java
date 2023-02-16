@@ -127,7 +127,7 @@ public class CakeShopApplicationIT {
     }
 
     @Test
-    public void testPostCakeShops() {
+    public void addNewCakeShop() {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
