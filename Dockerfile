@@ -1,5 +1,5 @@
 # Official openjdk runtime as parent image
-FROM openjdk:17-jre-slim
+FROM docker
 
 # Set working directory to /app
 WORKDIR /app
