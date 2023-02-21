@@ -1,19 +1,18 @@
-# Official openjdk runtime as parent image
-FROM debian:latest
+# Use an official Maven runtime as a parent image
+FROM maven:3.5.2-jdk-8
 
-RUN apt-get update && \
-    apt-get install -y openjdk-11-jdk
-ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64
-
-# Set working directory to /app
+# Set the working directory to /app
 WORKDIR /app
 
-# Copy current directory contents to /app container
-COPY . /app/
+# Copy the pom.xml file into the container
+COPY pom.xml /tmp/pom.xml
+RUN mvn -B -f /tmp/pom.xml -s /usr/share/maven/ref/settings-docker.xml dependency:resolve
 
-# Run Maven to build application
-RUN ./mvnw package
+# Copy the rest of the application code into the container
+COPY .mvn/wrapper/maven-wrapper.jar /app/
 
-# Set startup command to run application
-CMD ["java", "-jar", "target/cake-shop.jar"]
+# Expose the port that the application will run on
+EXPOSE 8080
 
+# Define the command to run the application when the container starts
+CMD ["java", "-jar", "target/mycake-shop.jar"]
